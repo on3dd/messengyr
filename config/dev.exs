@@ -25,7 +25,17 @@ config :messengyr, MessengyrWeb.Endpoint,
   secret_key_base: "T+OSQ13/q6NheGhqZCdIyw//JbbgmUiSYUmjjjDpeTEzPU/hWSzd3tba4kACa/xz",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {
+      Esbuild,
+      :install_and_run,
+      [:default, ~w(--sourcemap=inline --watch --loader:.jpg=file --loader:.png=file --loader:.svg=file)]
+    },
+    # Start the dart-sass watcher by calling DartSass.install_and_run(:default, args)
+    sass: {
+      DartSass,
+      :install_and_run,
+      [:default, ~w(--embed-source-map --source-map-urls=absolute --watch)]
+    }
   ]
 
 # ## SSL Support
