@@ -49,7 +49,9 @@ defmodule Messengyr.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:dart_sass, "~> 0.2", runtime: Mix.env() == :dev}
+      {:dart_sass, "~> 0.2", runtime: Mix.env() == :dev},
+      {:comeonin, "~> 3.0"},
+      {:guardian, "~> 2.0"}
     ]
   end
 
