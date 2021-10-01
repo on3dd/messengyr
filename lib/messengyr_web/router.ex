@@ -14,16 +14,18 @@ defmodule MessengyrWeb.Router do
       error_handler: Messengyr.Auth.ErrorHandler
   end
 
-  pipeline :browser_session do
+  pipeline :auth_session do
     plug Messengyr.Auth.Pipeline
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug Messengyr.Auth.Pipeline
   end
 
   scope "/", MessengyrWeb do
-    pipe_through [:browser, :browser_session]
+    pipe_through [:browser, :auth_session]
 
     get "/", PageController, :index
     get "/signup", PageController, :signup
@@ -36,9 +38,12 @@ defmodule MessengyrWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", MessengyrWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MessengyrWeb do
+    pipe_through :api
+
+    resources "/users", UserController, only: [:show]
+    resources "/rooms", RoomController
+  end
 
   # Enables LiveDashboard only for development
   #

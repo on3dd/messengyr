@@ -23,4 +23,8 @@ defmodule Messengyr.Accounts do
     |> validate_format(:username, ~r/^[a-zA-Z0-9]*$/)
     |> validate_length(:password, min: 4)
   end
+
+  def get_user(user_id) do
+    Repo.get(User, user_id)
+  end
 end
