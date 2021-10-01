@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :messengyr, Messengyr.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "messengyr",
+  password: "messengyr",
   database: "messengyr_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
