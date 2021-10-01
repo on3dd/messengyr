@@ -8,6 +8,10 @@ defmodule MessengyrWeb.Router do
     plug :put_root_layout, {MessengyrWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+
+    plug Guardian.Plug.Pipeline,
+      module: Messengyr.Auth.Guardian,
+      error_handler: Messengyr.Auth.ErrorHandler
   end
 
   pipeline :browser_session do
@@ -24,9 +28,11 @@ defmodule MessengyrWeb.Router do
     get "/", PageController, :index
     get "/signup", PageController, :signup
     get "/login", PageController, :login
-
+    get "/logout", PageController, :logout
     post "/signup", PageController, :create_user
     post "/login", PageController, :login_user
+
+    get "/messages", ChatController, :index
   end
 
   # Other scopes may use custom stacks.

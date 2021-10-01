@@ -1,14 +1,8 @@
-<!-- Add a class to the body: -->
 <body class={@conn.path_info}>
   <div class="container">
 
-    <!-- Add this header: -->
-    <header>
-      <%= link "", class: "logo", to: Routes.page_path(@conn, :index) %>
-      <%= link "Log in", to: Routes.page_path(@conn, :login) %>
-    </header>
+   <%= render MessengyrWeb.LayoutView, "header.html", assigns %>
 
-   	<!-- The rest should be the same: -->
     <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
     <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
@@ -16,6 +10,7 @@
       <%= @inner_content %>
     </main>
 
-  </div> <!-- /container -->
+  </div> 
+  
   <script src={Routes.static_path(@conn, "/assets/app.js")} />
 </body>
