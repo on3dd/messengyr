@@ -1,11 +1,21 @@
 defmodule Messengyr.Chat do
   alias Messengyr.Chat.{Message, Room, RoomUser}
   alias Messengyr.Repo
+  alias Messengyr.Accounts.User
 
   import Ecto.Query
 
   def create_room do
     %Room{} |> Repo.insert()
+  end
+
+  def create_room_with_counterpart(me, counterpart_username) do
+    counterpart = Repo.get_by!(User, username: counterpart_username)
+    room_members = [me, counterpart]
+
+    with {:ok, room} <- create_room() do
+      add_room_users(room, room_members)
+    end
   end
 
   def add_room_user(room, user) do
@@ -15,6 +25,20 @@ defmodule Messengyr.Chat do
     }
 
     Repo.insert(room_user)
+  end
+
+  defp add_room_users(room, []) do
+    {:ok, room |> preload_room_data}
+  end
+
+  defp add_room_users(room, [head | tail]) do
+    case add_room_user(room, head) do
+      {:ok, _} ->
+        add_room_users(room, tail)
+
+      _ ->
+        {:error, "Failed to add user to room!"}
+    end
   end
 
   def add_message(%{room: room, user: user, text: text}) do
@@ -28,9 +52,7 @@ defmodule Messengyr.Chat do
   end
 
   def list_rooms do
-    Repo.all(Room)
-    |> Repo.preload(:messages)
-    |> Repo.preload(:users)
+    Repo.all(Room) |> preload_room_data
   end
 
   def list_user_rooms(user) do
@@ -39,8 +61,10 @@ defmodule Messengyr.Chat do
         join: u in assoc(r, :users),
         where: u.id == ^user.id
 
-    Repo.all(query)
-    |> Repo.preload(:messages)
-    |> Repo.preload(:users)
+    Repo.all(query) |> preload_room_data
+  end
+
+  defp preload_room_data(room) do
+    room |> Repo.preload(:messages) |> Repo.preload(:users)
   end
 end

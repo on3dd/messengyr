@@ -8,11 +8,16 @@ defmodule MessengyrWeb.RoomView do
     %{rooms: Enum.map(rooms, &room_json(&1, %{me: me}))}
   end
 
+  def render("show.json", %{room: room, me: me}) do
+    %{room: room_json(room, %{me: me})}
+  end
+
   def room_json(%{users: room_users} = room, %{me: me}) do
     counterpart = get_counterpart(room_users, me)
 
     %{
       id: room.id,
+      created_at: room.inserted_at,
       counterpart: user_json(counterpart),
       messages: Enum.map(room.messages, &message_json(&1, %{me: me}))
     }
