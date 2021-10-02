@@ -1,0 +1,7 @@
+<div id="app"></div>
+
+<script>
+  window.jwtToken = "<%= jwt(@conn) %>";
+</script>
+
+<script src={Routes.static_path(@conn, "/assets/app.js")} />

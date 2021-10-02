@@ -1,4 +1,4 @@
-defmodule Messengyr.Auth.Pipeline do
+defmodule Messengyr.Auth.BrowserPipeline do
   use Guardian.Plug.Pipeline,
     otp_app: :messengyr,
     module: Messengyr.Auth.Guardian

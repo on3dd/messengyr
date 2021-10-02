@@ -15,13 +15,12 @@ defmodule MessengyrWeb.Router do
   end
 
   pipeline :auth_session do
-    plug Messengyr.Auth.Pipeline
+    plug Messengyr.Auth.BrowserPipeline
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug :fetch_session
-    plug Messengyr.Auth.Pipeline
+    plug Messengyr.Auth.ApiPipeline
   end
 
   scope "/", MessengyrWeb do
