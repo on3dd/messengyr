@@ -5,6 +5,10 @@ defmodule Messengyr.Chat do
 
   import Ecto.Query
 
+  def get_room(id) do
+    Repo.get(Room, id)
+  end
+
   def create_room do
     %Room{} |> Repo.insert()
   end
@@ -62,6 +66,17 @@ defmodule Messengyr.Chat do
         where: u.id == ^user.id
 
     Repo.all(query) |> preload_room_data
+  end
+
+  def room_has_user?(room, user) do
+    query =
+      from ru in RoomUser,
+        where: ru.room_id == ^room.id and ru.user_id == ^user.id
+
+    case Repo.one(query) do
+      %RoomUser{} -> true
+      _ -> false
+    end
   end
 
   defp preload_room_data(room) do
