@@ -42,6 +42,7 @@ defmodule MessengyrWeb.Router do
 
     resources "/users", UserController, only: [:show]
     resources "/rooms", RoomController
+    resources "/messages", MessageController, only: [:show]
   end
 
   # Enables LiveDashboard only for development
