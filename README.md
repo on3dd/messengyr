@@ -3,7 +3,12 @@
 🐦 Learning Phoenix framework. Inspired by [elixir-phoenix course by Tristan Edwards
 ](https://www.ludu.co/course/discover-elixir-phoenix/elixir-phoenix) 
 
-To start your Phoenix server:
+## ToDo:
+- [x] Basic web app
+- [x] JSON API
+- [ ] Rewrite web app with LiveView
+
+## To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
@@ -20,3 +25,4 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
